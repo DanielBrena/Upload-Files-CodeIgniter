@@ -7,6 +7,11 @@ class Log_model extends CI_Model {
         $this->load->library(array('session'));
     }
 
+    /**
+    Metodo que inserta un log con una descripcion.
+    @param $descripcion Descripcion del Log.
+    @retrun Int Regresa el id que se inserto.
+    */
     public function insert_log($descripcion){
 
     	$data = array(

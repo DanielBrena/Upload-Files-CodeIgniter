@@ -10,6 +10,10 @@ class Home extends CI_Controller {
 		$this->load->database('default');
 	}
 
+	/**
+	Metodo que nos regresa la vista principal si tiene una sesion, si no
+	lo va a regresar a la vista del login.
+	*/
 	public function index()
 	{
 
@@ -23,10 +27,16 @@ class Home extends CI_Controller {
 
 	}
 
+	/**
+	Muestra la vista del login.
+	*/
 	public function login(){
 		$this->load->view('login');
 	}
 
+	/**
+	Metodo que valida el inisio de sesión.
+	*/
 	public function validar(){
 		$this->form_validation->set_rules('usuario', 'Nombre de Usuario', 'required');
 		$this->form_validation->set_rules('contrasena', 'Contrasena', 'required');
@@ -56,6 +66,9 @@ class Home extends CI_Controller {
 
 	}
 
+	/**
+	Metodo que cierra la session.
+	*/
 	public function logout(){
 		$this->log_model->insert_log("Cerro sesión | Noticia");
 		$this->session->sess_destroy();

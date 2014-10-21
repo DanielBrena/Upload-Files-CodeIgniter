@@ -10,6 +10,10 @@ class Slide extends CI_Controller {
         $this->load->model('log_model');
     }
 
+    /**
+    Metodo que nos regresa la vista principal si tiene una sesion, sino nos regresa
+    la vista del login.
+    */
 	public function index()
 	{	
 
@@ -22,6 +26,9 @@ class Slide extends CI_Controller {
 		
 	}
 
+	/**
+	Metodo que inserta una imagen a la base de datos
+	*/
 	public function upload_file(){
 		$status = "";
 		$msg = "";
@@ -92,12 +99,17 @@ class Slide extends CI_Controller {
 
 	}
 
+	/**
+	Metodo que nos regresa una vista con todas las imagenes.
+	*/
 	public function imagenes(){
 		$imagenes = $this->slide_model->get_imgs();
 		$this->load->view('imagenes_slide', array("imgs"  => $imagenes));
 		
 	}
-
+	/**
+	Metodo que nos elimina una imagen.
+	*/
 	public function delete_imagen($img_id){
 		if($this->slide_model->delete_imagen($img_id)){
 			$this->log_model->insert_log("Imagen eliminada | Slide");
@@ -112,6 +124,9 @@ class Slide extends CI_Controller {
 		echo json_encode(array("status" => $status,"msg" => $msg));
 	}
 
+	/**
+	Metodo para activar una imagen.
+	*/
 	public function activar_img(){
 		$maximo = 3;
 		$id = $this->input->post("id");
@@ -167,6 +182,9 @@ class Slide extends CI_Controller {
 
 	}
 
+	/**
+	Metodo para editar una direccion URL
+	*/
 	public function editar_url(){
 		$id = $this->input->post("id");
 		$url = $this->input->post("url");

@@ -7,6 +7,15 @@ class Noticias_model extends CI_Model {
         $this->load->library(array('session'));
     }
 
+    /**
+    Metodo para insertar una noticia.
+    @param $pdf Nombre del archivo pdf.
+    @param $tipo Tipo que se va a insertar, puede ser pdf o url.
+    @param $url Direccion url.
+    @param $titulo Titulo a insertar.
+    @param $previa Nombre de la imagen previa.
+    @return $id Id de la insercion.
+    */
     public function insert_not($pdf,$tipo,$url,$titulo,$previa){
     	$data = array(
     		"not_archivo_nombre" => $pdf,
@@ -31,6 +40,11 @@ class Noticias_model extends CI_Model {
         return $this->db->select()->from("noticia")->get()->result();
     }
 
+    /**
+    Metodo que elimina una noticia dentro de la base de datos.
+    @param $not_id
+    @return Boolean Retorna un booleano si elimino la noticia junto con sus respectivos archivos.
+    */
     public function delete_noticia($not_id){
         $not  = $this->get_not($not_id);
 
@@ -48,6 +62,11 @@ class Noticias_model extends CI_Model {
         return TRUE;
     }
 
+    /**
+    Metodo que obtiene un registro mediante su id.
+    @param $not_id Id de la noticia a obtener.
+    @return Array Array con el registro.
+    */
     public function get_not($not_id){
         return $this->db->select()
             ->from("noticia")
@@ -56,11 +75,21 @@ class Noticias_model extends CI_Model {
             ->row();
     }
 
+    /**
+    Metodo que nos obtiene el numero de noticias activas (not_estao = "1").
+    @return Int Numero de registros.
+    */
     public function num_activas(){
         $this->db->where('not_estado', '1');
         $this->db->from('noticia');
         return  $this->db->count_all_results();
     }
+
+    /**
+    Metodo que nos activa una noticiamediante su id.
+    @param $id Id de la noticia a activar.
+    @return Int Regresa si se realizo con exito la peticion. 
+    */
 
     public function activar_not($id){
         $data = array(
@@ -72,6 +101,11 @@ class Noticias_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
+    /**
+    Metodo que nos desactiva una noticia mediante su id.
+    @param $id Id de la noticia a desactivar.
+    @return Int Regresa si se realizo con exito la peticion. 
+    */
     public function desactivar_not($id){
         $data = array(
                'not_estado' => "0"
@@ -82,6 +116,10 @@ class Noticias_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
+    /**
+    Metodo que nos desactivar una noticia que esta como principal.
+    @return Int Regresa si se realizo con exito la peticion. 
+    */
     public function desactivar_principal(){
         $data = array(
                'not_estado' => "1"
@@ -92,7 +130,11 @@ class Noticias_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
-
+    /**
+    Metodo que activa una noticia como principal mediante su id.
+    @param $id Id de la noticia a activar como principal.
+    @return Int Regresa si se realizo con exito la peticion. 
+    */
     public function activar_principal($id){
         $not  = $this->get_not($id);
 
@@ -112,6 +154,12 @@ class Noticias_model extends CI_Model {
         
     }
 
+    /**
+    Metodo que edita en la base de datos una direccion url mediante su id.
+    @param $id Id de la noticia a editar.
+    @param $url Url nueva.
+    @return Int Regresa si se realizo con exito la peticion. 
+    */
     public function editar_url($id,$url){
         $data = array(
                'not_url' => $url
@@ -122,6 +170,12 @@ class Noticias_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
+     /**
+    Metodo que edita en la base de datos el titulo mediante su id.
+    @param $id Id de la noticia a editar.
+    @param $titulo Titulo nuevo.
+    @return Int Regresa si se realizo con exito la peticion. 
+    */
     public function editar_titulo($id,$titulo){
         $data = array(
                'not_titulo' => $titulo

@@ -171,6 +171,10 @@ class Noticia extends CI_Controller {
 
 	}
 
+	/**
+	Metodo que valida una direccion url
+	@return True Validacion
+	*/
 	private function validar_url($url){
 		$url_valida = array("http://","https://");
 		$url_1 = substr($url,0, 7);
@@ -184,11 +188,17 @@ class Noticia extends CI_Controller {
 
 	}
 
+	/**
+	Metodo que nos regresa una vista con todas las noticias.
+	*/
 	public function noticias(){
 		$noticias = $this->noticias_model->get_noticias();
 		$this->load->view('noticias_slide', array("not"  => $noticias));
 	}
 
+	/**
+	Metodo que nos elimina una noticia.
+	*/
 	public function delete_noticia($not_id){
 		if($this->noticias_model->delete_noticia($not_id)){
 			$this->log_model->insert_log("Noticia eliminada | Noticia");
@@ -203,7 +213,9 @@ class Noticia extends CI_Controller {
 		echo json_encode(array("status" => $status,"msg" => $msg));
 	}
 
-
+	/**
+	Metodo para activar una noticia.
+	*/
 	public function activar_not(){
 		$maximo = 1;
 		$id = $this->input->post("id");
@@ -262,6 +274,9 @@ class Noticia extends CI_Controller {
 	}
 
 
+	/**
+	Metodo para editar una direccion URL
+	*/
 	public function editar_url(){
 		$id = $this->input->post("id");
 		$url = $this->input->post("url");
@@ -298,6 +313,9 @@ class Noticia extends CI_Controller {
 	}
 
 
+	/**
+	Metodo para editar un titulo.
+	*/
 	public function editar_titulo(){
 		$id = $this->input->post("id");
 		$titulo = $this->input->post("titulo");
